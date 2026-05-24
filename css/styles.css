@@ -549,6 +549,15 @@ a {
   cursor: not-allowed;
 }
 
+.form-group--count {
+  transition: opacity 0.2s ease;
+}
+
+.form-input--number {
+  width: 5rem;
+  text-align: center;
+}
+
 /* ——— Closing ——— */
 
 .closing-caption {

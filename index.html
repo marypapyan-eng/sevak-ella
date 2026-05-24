@@ -187,8 +187,23 @@
       <p class="section-lead">Ваши ответы помогут нам в организации торжества.</p>
 
       <form class="rsvp-form" id="rsvp-form" method="post" novalidate>
+
+        <div class="form-group">
+          <label class="form-label" for="guest-name">Имя и Фамилия</label>
+          <p class="form-hint">Просьба написать без запятых и символов</p>
+          <input
+            type="text"
+            id="guest-name"
+            name="name"
+            class="form-input"
+            placeholder="Иван Иванов"
+            autocomplete="name"
+            required
+          />
+        </div>
+
         <fieldset class="rsvp-fieldset">
-          <legend class="rsvp-legend">Присутствие на торжестве</legend>
+          <legend class="rsvp-legend">Придёте ли вы?</legend>
 
           <label class="radio-label">
             <input type="radio" name="attendance" value="yes" required />
@@ -200,17 +215,18 @@
           </label>
         </fieldset>
 
-        <div class="form-group">
-          <label class="form-label" for="guest-name">Имя и Фамилия</label>
-          <p class="form-hint">Если вы придёте с семьей, укажите все имена. Просьба написать без запятых и символов</p>
+        <div class="form-group form-group--count" id="guest-count-group" hidden>
+          <label class="form-label" for="guest-count">Сколько человек придёт?</label>
+          <p class="form-hint">Включая вас</p>
           <input
-            type="text"
-            id="guest-name"
-            name="name"
-            class="form-input"
-            placeholder="Иван Иванов"
-            autocomplete="name"
-            required
+            type="number"
+            id="guest-count"
+            name="guestCount"
+            class="form-input form-input--number"
+            placeholder="1"
+            min="1"
+            max="20"
+            value="1"
           />
         </div>
 

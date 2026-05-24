@@ -11,6 +11,22 @@
     no: 'Прийти не получается',
   };
 
+  var countGroup = document.getElementById('guest-count-group');
+  var radios = form.querySelectorAll('input[name="attendance"]');
+
+  function updateCountVisibility() {
+    var checked = form.querySelector('input[name="attendance"]:checked');
+    if (countGroup) {
+      countGroup.hidden = !(checked && checked.value === 'yes');
+    }
+  }
+
+  radios.forEach(function (radio) {
+    radio.addEventListener('change', updateCountVisibility);
+  });
+
+  updateCountVisibility();
+
   form.addEventListener('submit', function (event) {
     event.preventDefault();
     submitForm();
@@ -47,6 +63,19 @@
     setLoading(true);
     showMessage('', '');
 
+    var guestCountEl = document.getElementById('guest-count');
+    var guestCount = (attendance === 'yes' && guestCountEl)
+      ? (parseInt(guestCountEl.value, 10) || 1)
+      : null;
+
+    var payload = {
+      Имя: name,
+      Присутствие: ATTENDANCE_LABELS[attendance] || attendance,
+    };
+    if (guestCount !== null) {
+      payload['Количество человек'] = guestCount;
+    }
+
     try {
       var response = await fetch(config.formspreeUrl, {
         method: 'POST',
@@ -54,10 +83,7 @@
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: JSON.stringify({
-          Присутствие: ATTENDANCE_LABELS[attendance] || attendance,
-          Имя: name,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
